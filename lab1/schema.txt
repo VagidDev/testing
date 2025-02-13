@@ -1,0 +1,36 @@
+- parameters
+  - char *filename (в функции editorOpen)
+  - int fd (в функциях enableRawMode, editorReadKey)
+  - int key (в editorMoveCursor)
+
+- invariant
+  - function name: editorOpen
+  - outvar: 0 (успех) или 1 (ошибка)
+  - precondition: файл существует и доступен для чтения
+  - postcondition: содержимое файла загружено в редактор
+
+  - function name: editorSave
+  - outvar: 0 (успех) или 1 (ошибка)
+  - precondition: файл изменен (E.dirty != 0)
+  - postcondition: изменения сохранены на диск
+
+  - function name: editorProcessKeypress
+  - outvar: отсутствует (void)
+  - precondition: терминал в raw-режиме
+  - postcondition: состояние редактора обновлено согласно вводу
+
+- global elements
+  - global varname: E (структура editorConfig)
+  - outline: хранит состояние редактора (курсор, строки, синтаксис и т.д.)
+  - type: struct editorConfig
+
+  - global varname: HLDB (массив структур editorSyntax)
+  - outline: база данных для подсветки синтаксиса
+  - type: struct editorSyntax[]
+
+- return type and var
+  - return type: int (для editorOpen, editorSave)
+  - return var: 0/1 (результат выполнения)
+  
+  - return type: void (для editorRefreshScreen, editorSetStatusMessage)
+  - return var: отсутствует
