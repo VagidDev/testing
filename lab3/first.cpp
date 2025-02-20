@@ -42,255 +42,167 @@ int** create_and_fill_array(string filename) {
     return matrix;
 }
 
-bool check_associativity(int matrix[][SIZE]) {
-    for (int a = 0; a < SIZE; a++) {
-        for (int b = 0; b < SIZE; b++) {
-            for (int c = 0; c < SIZE; c++) {
-                if (matrix[a][matrix[b][c]] != matrix[matrix[a][b]][c]) {
+bool is_associate(int** matrix) {
+    for (int a = 0; a < side; a++)
+        for (int b = 0; b < side; b++)
+            for (int c = 0; c < side; c++)
+                if (matrix[a][matrix[b][c]] != matrix[matrix[a][b]][c])
                     return false;
-                }
-            }
-        }
-    }
     return true;
 }
 
-bool check_mediality(int matrix[][SIZE]) {
-    for (int a = 0; a < SIZE; a++) {
-        for (int b = 0; b < SIZE; b++) {
-            for (int c = 0; c < SIZE; c++) {
-                for (int d = 0; d < SIZE; d++) {
-                    if (matrix[matrix[a][b]][matrix[c][d]] != matrix[matrix[a][c]][matrix[b][d]]) {
+bool is_medial(int** matrix) {
+    for (int a = 0; a < side; a++)
+        for (int b = 0; b < side; b++)
+            for (int c = 0; c < side; c++)
+                for (int d = 0; d < side; d++)
+                    if (matrix[matrix[a][b]][matrix[c][d]] != matrix[matrix[a][c]][matrix[b][d]])
                         return false;
-                    }
-                }
-            }
-        }
-    }
     return true;
 }
 
-bool check_paramediality(int matrix[][SIZE]) {
-    for (int a = 0; a < SIZE; a++) {
-        for (int b = 0; b < SIZE; b++) {
-            for (int c = 0; c < SIZE; c++) {
-                for (int d = 0; d < SIZE; d++) {
-                    if (matrix[matrix[a][b]][matrix[c][d]] != matrix[matrix[d][b]][matrix[c][a]]) {
+bool is_paramedial(int** matrix) {
+    for (int a = 0; a < side; a++)
+        for (int b = 0; b < side; b++)
+            for (int c = 0; c < side; c++)
+                for (int d = 0; d < side; d++)
+                    if (matrix[matrix[a][b]][matrix[c][d]] != matrix[matrix[d][b]][matrix[c][a]])
                         return false;
-                    }
-                }
-            }
-        }
-    }
     return true;
 }
 
-bool check_bicommutativity(int matrix[][SIZE]) {
-    for (int a = 0; a < SIZE; a++) {
-        for (int b = 0; b < SIZE; b++) {
-            for (int c = 0; c < SIZE; c++) {
-                for (int d = 0; d < SIZE; d++) {
-                    if (matrix[matrix[a][b]][matrix[c][d]] != matrix[matrix[d][c]][matrix[b][a]]) {
+bool is_biocommutative(int** matrix) {
+    for (int a = 0; a < side; a++)
+        for (int b = 0; b < side; b++)
+            for (int c = 0; c < side; c++)
+                for (int d = 0; d < side; d++)
+                    if (matrix[matrix[a][b]][matrix[c][d]] != matrix[matrix[d][c]][matrix[b][a]])
                         return false;
-                    }
-                }
-            }
-        }
-    }
     return true;
 }
 
-bool check_AG_groupoid(int matrix[][SIZE]) {
-    for (int a = 0; a < SIZE; a++) {
-        for (int b = 0; b < SIZE; b++) {
-            for (int c = 0; c < SIZE; c++) {
-                if (matrix[matrix[a][b]][c] != matrix[matrix[c][b]][a]) {
+bool is_AG(int** matrix) {
+    for (int a = 0; a < side; a++)
+        for (int b = 0; b < side; b++)
+            for (int c = 0; c < side; c++)
+                if (matrix[matrix[a][b]][c] != matrix[matrix[c][b]][a])
                     return false;
-                }
-            }
-        }
-    }
     return true;
 }
 
-bool check_GA_groupoid(int matrix[][SIZE]) {
-    for (int a = 0; a < SIZE; a++) {
-        for (int b = 0; b < SIZE; b++) {
-            for (int c = 0; c < SIZE; c++) {
-                if (matrix[matrix[a][b]][c] != matrix[c][matrix[b][a]]) {
+bool is_GA(int** matrix) {
+    for (int a = 0; a < side; a++)
+        for (int b = 0; b < side; b++)
+            for (int c = 0; c < side; c++)
+                if (matrix[matrix[a][b]][c] != matrix[c][matrix[b][a]])
                     return false;
-                }
-            }
-        }
-    }
     return true;
 }
 
-bool check_GA1_groupoid(int matrix[][SIZE]) {
-    for (int a = 0; a < SIZE; a++) {
-        for (int b = 0; b < SIZE; b++) {
-            for (int c = 0; c < SIZE; c++) {
-                if (matrix[matrix[a][b]][c] != matrix[matrix[c][a]][b]) {
+bool is_GA_1(int** matrix) {
+    for (int a = 0; a < side; a++)
+        for (int b = 0; b < side; b++)
+            for (int c = 0; c < side; c++)
+                if (matrix[matrix[a][b]][c] != matrix[matrix[c][a]][b])
                     return false;
-                }
-            }
-        }
-    }
     return true;
 }
 
-bool check_AD_groupoid(int matrix[][SIZE]) {
-    for (int a = 0; a < SIZE; a++) {
-        for (int b = 0; b < SIZE; b++) {
-            for (int c = 0; c < SIZE; c++) {
-                if (matrix[a][matrix[b][c]] != matrix[c][matrix[b][a]]) {
+bool is_AD(int** matrix) {
+    for (int a = 0; a < side; a++)
+        for (int b = 0; b < side; b++)
+            for (int c = 0; c < side; c++)
+                if (matrix[a][matrix[b][c]] != matrix[c][matrix[b][a]])
                     return false;
-                }
-            }
-        }
-    }
     return true;
 }
 
-bool check_DA_groupoid(int matrix[][SIZE]) {
-    for (int a = 0; a < SIZE; a++) {
-        for (int b = 0; b < SIZE; b++) {
-            for (int c = 0; c < SIZE; c++) {
-                if (matrix[a][matrix[b][c]] != matrix[c][matrix[a][b]]) {
+bool is_DA(int** matrix) {
+    for (int a = 0; a < side; a++)
+        for (int b = 0; b < side; b++)
+            for (int c = 0; c < side; c++)
+                if (matrix[a][matrix[b][c]] != matrix[c][matrix[a][b]])
                     return false;
-                }
-            }
-        }
-    }
     return true;
 }
 
-bool check_hexagonality(int matrix[][SIZE]) {
-    for (int a = 0; a < SIZE; a++) {
-        if (matrix[a][a] != a) {
+bool is_hexa(int** matrix) {
+    for (int a = 0; a < side; a++)
+        if (matrix[a][a] != a)
             return false;
-        }
-    }
 
-    for (int a = 0; a < SIZE; a++) {
-        for (int b = 0; b < SIZE; b++) {
-            for (int c = 0; c < SIZE; c++) {
-                for (int d = 0; d < SIZE; d++) {
-                    if (matrix[matrix[a][b]][matrix[c][d]] != matrix[matrix[a][c]][matrix[b][d]]) {
-                        return false;
-                    }
-                }
-            }
-        }
-    }
-
-    for (int a = 0; a < SIZE; a++) {
-        for (int b = 0; b < SIZE; b++) {
-            if (matrix[a][matrix[b][a]] != matrix[matrix[a][b]][a] || matrix[a][matrix[b][a]] != b) {
+    for (int a = 0; a < side; a++)
+        for (int b = 0; b < side; b++)
+            if (matrix[a][matrix[b][a]] != matrix[matrix[a][b]][a] || matrix[a][matrix[b][a]] != b)
                 return false;
-            }
-        }
-    }
     return true;
 }
 
-bool check_right_distributivity(int matrix[][SIZE]) {
-    for (int a = 0; a < SIZE; a++) {
-        for (int b = 0; b < SIZE; b++) {
-            for (int c = 0; c < SIZE; c++) {
-                if (matrix[matrix[a][b]][c] != matrix[matrix[a][c]][matrix[b][c]]) {
+bool is_distribute_right(int** matrix) {
+    for (int a = 0; a < side; a++)
+        for (int b = 0; b < side; b++)
+            for (int c = 0; c < side; c++)
+                if (matrix[matrix[a][b]][c] != matrix[matrix[a][c]][matrix[b][c]])
                     return false;
-                }
-            }
-        }
-    }
     return true;
 }
 
-bool check_left_distributivity(int matrix[][SIZE]) {
-    for (int a = 0; a < SIZE; a++) {
-        for (int b = 0; b < SIZE; b++) {
-            for (int c = 0; c < SIZE; c++) {
-                if (matrix[c][matrix[a][b]] != matrix[matrix[c][a]][matrix[c][b]]) {
+bool is_distribute_left(int** matrix) {
+    for (int a = 0; a < side; a++)
+        for (int b = 0; b < side; b++)
+            for (int c = 0; c < side; c++)
+                if (matrix[c][matrix[a][b]] != matrix[matrix[c][a]][matrix[c][b]])
                     return false;
-                }
-            }
-        }
-    }
     return true;
 }
 
-bool check_right_unit(int matrix[][SIZE]) {
-    for (int x = 0; x < SIZE; x++) {
+bool is_digit_right(int** matrix) {
+    for (int x = 0; x < side; x++) {
         bool has_unit = false;
-        for (int e = 0; e < SIZE; e++) {
+        for (int e = 0; e < side; e++)
             if (matrix[x][e] == x) {
                 has_unit = true;
                 break;
             }
-        }
-        if (!has_unit) {
+        if (!has_unit)
             return false;
-        }
     }
     return true;
 }
 
-bool check_left_unit(int matrix[][SIZE]) {
-    for (int x = 0; x < SIZE; x++) {
+bool is_digit_left(int** matrix) {
+    for (int x = 0; x < side; x++) {
         bool has_unit = false;
-        for (int e = 0; e < SIZE; e++) {
+        for (int e = 0; e < side; e++)
             if (matrix[e][x] == x) {
                 has_unit = true;
                 break;
             }
-        }
-        if (!has_unit) {
+        if (!has_unit)
             return false;
-        }
     }
     return true;
 }
 
-bool check_unit(int matrix[][SIZE]) {
-    for (int x = 0; x < SIZE; x++) {
-        bool has_unit = false;
-        for (int e = 0; e < SIZE; e++) {
-            if (matrix[x][e] == x && matrix[e][x] == x) {
-                has_unit = true;
-                break;
-            }
-        }
-        if (!has_unit) {
-            return false;
-        }
-    }
-    return true;
+bool is_digit(int** matrix) {
+    return is_digit_left(matrix) && is_digit_right(matrix);
 }
 
-bool check_Ward(int matrix[][SIZE]) {
-    for (int a = 0; a < SIZE; a++) {
-        for (int b = 0; b < SIZE; b++) {
-            for (int c = 0; c < SIZE; c++) {
-                if (matrix[a][b] != matrix[matrix[a][c]][matrix[b][c]]) {
+bool is_urod(int** matrix) {
+    for (int a = 0; a < side; a++)
+        for (int b = 0; b < side; b++)
+            for (int c = 0; c < side; c++)
+                if (matrix[a][b] != matrix[matrix[a][c]][matrix[b][c]])
                     return false;
-                }
-            }
-        }
-    }
     return true;
 }
 
-bool check_inverse_Ward(int matrix[][SIZE]) {
-    for (int a = 0; a < SIZE; a++) {
-        for (int b = 0; b < SIZE; b++) {
-            for (int c = 0; c < SIZE; c++) {
-                if (matrix[a][b] != matrix[matrix[c][a]][matrix[c][b]]) {
+bool is_reverse_urod(int** matrix) {
+    for (int a = 0; a < side; a++)
+        for (int b = 0; b < side; b++)
+            for (int c = 0; c < side; c++)
+                if (matrix[a][b] != matrix[matrix[c][a]][matrix[c][b]])
                     return false;
-                }
-            }
-        }
-    }
     return true;
 }
 
