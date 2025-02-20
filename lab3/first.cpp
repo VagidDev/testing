@@ -294,6 +294,12 @@ bool check_inverse_Ward(int** matrix) {
     return true;
 }
 
+void delete_matrix(int** matrix) {
+    for (int i = 0; i < side; i++)
+        delete[] matrix[i];
+    delete[] matrix;
+}
+
 int main() 
 {
     setlocale(LC_ALL, "Russian");
