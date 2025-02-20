@@ -4,7 +4,6 @@
 
 using namespace std;
 
-int **matrix;
 int side;
 
 int get_number_of_strings(string filename) {
@@ -22,12 +21,12 @@ int get_number_of_strings(string filename) {
     return count;
 }
 
-void create_and_fill_array(string filename) {
+int** create_and_fill_array(string filename) {
     side = get_number_of_strings(filename);
-    matrix = new int*[side];
+    int** matrix = new int*[side + 1];
 
-    for (int i = 0; i < side; ++i) {
-        matrix[i] = new int[side];
+    for (int i = 0; i < side + 1; ++i) {
+        matrix[i] = new int[side + 1];
     }
 
     ifstream file(filename);
@@ -39,10 +38,11 @@ void create_and_fill_array(string filename) {
             file >> matrix[i][j];
         }
     }
-    
+    file.close();
+    return matrix;
 }
 
-bool is_associate() 
+bool is_associate(int** matrix) 
 {
     for (int a = 0; a < side; ++a) 
         for (int b = 0; b < side; ++b)
@@ -53,7 +53,7 @@ bool is_associate()
     return true;
 }
 
-bool is_medial() 
+bool is_medial(int** matrix) 
 {
     for (int a = 0; a < side; ++a) 
         for (int b = 0; b < side; ++b)
@@ -65,7 +65,7 @@ bool is_medial()
     return true;
 }
 
-bool is_paramedial() 
+bool is_paramedial(int** matrix) 
 {
     for (int a = 0; a < side; ++a) 
         for (int b = 0; b < side; ++b)
@@ -77,7 +77,7 @@ bool is_paramedial()
     return true;
 }
 
-bool is_biocommutative() 
+bool is_biocommutative(int** matrix) 
 {
     for (int a = 0; a < side; ++a) 
         for (int b = 0; b < side; ++b)
@@ -89,7 +89,7 @@ bool is_biocommutative()
     return true;
 }
 
-bool is_AG() 
+bool is_AG(int** matrix) 
 {
     for (int a = 0; a < side; ++a) 
         for (int b = 0; b < side; ++b)
@@ -100,7 +100,7 @@ bool is_AG()
     return true;
 }
 
-bool is_GA() 
+bool is_GA(int** matrix) 
 {
     for (int a = 0; a < side; ++a) 
         for (int b = 0; b < side; ++b)
@@ -111,7 +111,7 @@ bool is_GA()
     return true;
 }
 
-bool is_GA_1() 
+bool is_GA_1(int** matrix) 
 {
     for (int a = 0; a < side; ++a) 
         for (int b = 0; b < side; ++b)
@@ -122,7 +122,7 @@ bool is_GA_1()
     return true;
 }
 
-bool is_AD() 
+bool is_AD(int** matrix) 
 {
     for (int a = 0; a < side; ++a) 
         for (int b = 0; b < side; ++b)
@@ -133,7 +133,7 @@ bool is_AD()
     return true;
 }
 
-bool is_DA() 
+bool is_DA(int** matrix) 
 {
     for (int a = 0; a < side; ++a) 
         for (int b = 0; b < side; ++b)
@@ -144,8 +144,7 @@ bool is_DA()
     return true;
 }
 
-
-bool is_hexa() 
+bool is_hexa(int** matrix) 
 {
     //TODO: create logic
     for (int a = 0; a < side; ++a) 
@@ -157,7 +156,7 @@ bool is_hexa()
     return true;
 }
 
-bool is_distribute_right() 
+bool is_distribute_right(int** matrix) 
 {
     for (int a = 0; a < side; ++a) 
         for (int b = 0; b < side; ++b)
@@ -168,7 +167,7 @@ bool is_distribute_right()
     return true;
 }
 
-bool is_distribute_left() 
+bool is_distribute_left(int** matrix) 
 {
     for (int a = 0; a < side; ++a) 
         for (int b = 0; b < side; ++b)
@@ -179,25 +178,25 @@ bool is_distribute_left()
     return true;
 }
 
-bool is_digit_right() 
+bool is_digit_right(int** matrix) 
 {
     //TODO: create algoritm        
     return true;
 }
 
-bool is_digit_left() 
+bool is_digit_left(int** matrix) 
 {
     //TODO: create algoritm        
     return true;
 }
 
-bool is_digit() 
+bool is_digit(int** matrix) 
 {
     //TODO: create algoritm        
     return true;
 }
 
-bool is_urod() 
+bool is_urod(int** matrix) 
 {
     for (int a = 0; a < side; ++a) 
         for (int b = 0; b < side; ++b)
@@ -208,7 +207,7 @@ bool is_urod()
     return true;
 }
 
-bool is_reverse_urod() 
+bool is_reverse_urod(int** matrix) 
 {
     for (int a = 0; a < side; ++a) 
         for (int b = 0; b < side; ++b)
@@ -223,10 +222,14 @@ int main()
 {
     setlocale(LC_ALL, "Russian");
 
+    int **matrix;
+
+
     string line;
     cout<<"Input the file name: ";
     cin>>line;
-    create_and_fill_array(line);
+    
+    matrix = create_and_fill_array(line); 
 
     for (int i = 0; i < side; ++i, cout<<endl) 
         for (int j = 0; j < side; j++)
@@ -234,25 +237,28 @@ int main()
         
     //WARNING: functions don't work correct!!!!! 
     //TODO: fix it
-    cout<<endl<<"Ассоциативность"<<setw(10)<<is_associate();
-    cout<<endl<<"Медиальность"<<setw(10)<<is_medial();
-    /*cout<<endl<<"Парамедиальность"<<setw(10)<<is_paramedial();
-    cout<<endl<<"Бикоммутативность"<<setw(10)<<is_biocommutative();
-    cout<<endl<<"AG-группоид"<<setw(10)<<is_AG();
-    cout<<endl<<"GA-группоид"<<setw(10)<<is_GA();
-    cout<<endl<<"GA-1 группоид"<<setw(10)<<is_GA_1();
-    cout<<endl<<"AD-группоид"<<setw(10)<<is_AD();
-    cout<<endl<<"DA-группоид"<<setw(10)<<is_DA();
-    cout<<endl<<"Гексагональность"<<setw(10)<<is_hexa();
-    cout<<endl<<"Дистрибутивность справа"<<setw(10)<<is_distribute_right();
-    cout<<endl<<"Дистрибутивность слева"<<setw(10)<<is_distribute_left();
-    cout<<endl<<"Единица справа"<<setw(10)<<is_digit_right();
-    cout<<endl<<"Единица слева"<<setw(10)<<is_digit_left();
-    cout<<endl<<"Единица"<<setw(10)<<is_digit();
-    cout<<endl<<"Уорд"<<setw(10)<<is_urod();
-    cout<<endl<<"Обратный Уорд"<<setw(10)<<is_reverse_urod();*/
+    const int textWidth = 30;
 
-    cout<<endl;
+    // Вывод с форматированием
+    cout << "+---------------------------------+" << endl;
+    cout << "| " << setw(textWidth) << left << "Ассоциативность            " << " | " << right << (is_associate(matrix) ? "+" : "-") << " |" << endl;
+    cout << "| " << setw(textWidth) << left << "Медиальность               " << " | " << right << (is_medial(matrix) ? "+" : "-") << " |" << endl;
+    cout << "| " << setw(textWidth) << left << "Парамедиальность           " << " | " << right << (is_paramedial(matrix) ? "+" : "-") << " |" << endl;
+    cout << "| " << setw(textWidth) << left << "Бикоммутативность          " << " | " << right << (is_biocommutative(matrix) ? "+" : "-") << " |" << endl;
+    cout << "| " << setw(textWidth) << left << "AG-группоид                " << " | " << right << (is_AG(matrix) ? "+" : "-") << " |" << endl;
+    cout << "| " << setw(textWidth) << left << "GA-группоид                " << " | " << right << (is_GA(matrix) ? "+" : "-") << " |" << endl;
+    cout << "| " << setw(textWidth) << left << "GA-1 группоид              " << " | " << right << (is_GA_1(matrix) ? "+" : "-") << " |" << endl;
+    cout << "| " << setw(textWidth) << left << "AD-группоид                " << " | " << right << (is_AD(matrix) ? "+" : "-") << " |" << endl;
+    cout << "| " << setw(textWidth) << left << "DA-группоид                " << " | " << right << (is_DA(matrix) ? "+" : "-") << " |" << endl;
+    cout << "| " << setw(textWidth) << left << "Гексагональность           " << " | " << right << (is_hexa(matrix) ? "+" : "-") << " |" << endl;
+    cout << "| " << setw(textWidth) << left << "Дистрибутивность справа    " << " | " << right << (is_distribute_right(matrix) ? "+" : "-") << " |" << endl;
+    cout << "| " << setw(textWidth) << left << "Дистрибутивность слева     " << " | " << right << (is_distribute_left(matrix) ? "+" : "-") << " |" << endl;
+    cout << "| " << setw(textWidth) << left << "Единица справа             " << " | " << right << (is_digit_right(matrix) ? "+" : "-") << " |" << endl;
+    cout << "| " << setw(textWidth) << left << "Единица слева              " << " | " << right << (is_digit_left(matrix) ? "+" : "-") << " |" << endl;
+    cout << "| " << setw(textWidth) << left << "Единица                    " << " | " << right << (is_digit(matrix) ? "+" : "-") << " |" << endl;
+    cout << "| " << setw(textWidth) << left << "Уорд                       " << " | " << right << (is_urod(matrix) ? "+" : "-") << " |" << endl;
+    cout << "| " << setw(textWidth) << left << "Обратный Уорд              " << " | " << right << (is_reverse_urod(matrix) ? "+" : "-") << " |" << endl;
+    cout << "+---------------------------------+" << endl;
 
     return  0;    
 } // namespace std;
